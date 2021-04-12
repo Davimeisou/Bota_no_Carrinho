@@ -1,0 +1,52 @@
+* {
+  margin: 0;
+}
+
+/* Tudo */
+
+#tudo {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+}
+
+/* Tudo */
+
+/* Lists */
+
+#lista {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+#lista h1 {
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+
+#lista div {
+  
+  border-radius: 10%;
+  border: black;
+  width: 50px;
+  height: 40px;
+}
+
+/* List */
+
+/* Cart */
+
+#carrinho {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#carrinho h2 {
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+/* Cart */
