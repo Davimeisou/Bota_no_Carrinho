@@ -2,24 +2,22 @@
 
 const form = document.getElementById('todoForm');
 
-//evento que dispara a ação de coletar o li (atualmente com erro, afinal não tem como dar submit em lista)
+// não tô conseguindo pegar os itens e eu n sei o pq (provavelmente é um erro bobo)
 form.addEventListener('submit', function(event) {
     event.preventDefault();
     const { target } = event;
 
-    const elementos = target.getElementsById('elementos')
+    const elementos = target.getElementById('elementos');
 
     const qnt_prod = elementos.item('qnt-prod');
     const podutoId = elementos.item('id');
     const produtoTodo = elementos.item("todo");
 
     if(produtoTodo && qnt_prod){
-        const produtos = produtoTodo.innerText;
-        const qnt = qnt_prod.value;
-        Adicionar(produtos);
-        buysave(produtos);
-        Adicionar_qnt(qnt);
-        buysave(qnt);
+        const todo = buysave(qnt_prod.value, produtoTodo.innerText);
+        Adicionar(todo.id, todo.text, todo.text2); 
+        //Adicionar_qnt(qnt);
+        //buysave(qnt);
     }
     
     target.reset();
@@ -38,34 +36,79 @@ function pegartodos(){
 
   }
 
+  function geradorid(){
+    return 1;
+  }
+
 //evento que salva a parada toda
-function buysave(text, satate = false){
+function buysave(text,text2){
+    const todo = {
+
+        id = 1,
+        text, text2
+
+    };
 
     const listinha = pegartodos();
-    listinha.push(text, state)
+
+    if(listinha.lenght) {
+
+        todo.id = listinha[listinha.lenght - 1].id + 1;
+
+    }
+    
+    listinha.push(todo);
     const listinhaStr = JSON.stringify(listinha);
     localStorage.setItem('listinha-item', listinhaStr );
-
+    return todo;
     
 }
 
+function deletar(id){
+
+    let listinha = pegartodos();
+    listinha = listinha.filter(todo => todo.id != id);
+    localStorage.setItem('listinha-item', JSON.stringify(listinha) );
+
+}
+
 //função que adiciona o item no carrinho
-function Adicionar(text){
+function Adicionar(id,text,text2){
 
-    const lista_prod = document.getElementsByClassName('itenscarrinho').item(0);
+    const lista_prod = document.getElementsByClassName('itenscarrinho').item(1);
+    const lista_prod_qnt = document.getElementsByClassName('itenscarrinho').item(0);
 
-    if(lista_prod){
+    if(lista_prod && lista_prod_qnt){
+
+        const h4 = document.createElement('h4');
+        h4.classList.add('qnt-car');
+        h4.dataset.id = id;
 
         const li = document.createElement('li');
-         li.classList.add('produto-car');
-         li.append(text);
-        lista_prod.appendChild(li);
+        li.classList.add('produto-car');
+        
+        const button = document.createElement('button');
+        button.name = 'id';
+        button.innerText = ":(";
+        button.classList.add('deletado')
+        button.value = id;
+        button.addEventListener("click", function(target) {
+
+            deletar(target.value), Carrega();
+
+        });
+         
+         h4.append(text);
+         li.append(text2);
+         li.appendChild(button);
+         lista_prod.appendChild(h4,li);
+        
 
     }
 
 }
 
-function Adicionar_qnt(text){
+/*function Adicionar_qnt(text){
 
     const lista_prod = document.getElementsByClassName('itenscarrinho').item(0);
 
@@ -80,14 +123,20 @@ function Adicionar_qnt(text){
     }
 
 
+}*/
+
+function Carrega(){
+
+    const lista_prod_vaz = document.getElementsByClassName('itenscarrinho').item(0);
+    lista_prod_vaz.innerHTML = ' ';
+    pegartodos().forEach((todo) => {
+
+        // Adicionar_qnt(todos);
+         Adicionar(todo.id,todo.text,todo.text2);
+         
+     });
+ 
 }
 
 //carregando a tela de novo 
-window.onload = () =>{
-    pegartodos().forEach((todos) => {
-
-        Adicionar(todos);
-    });
-
-
-};
+window.onload = Carrega();
