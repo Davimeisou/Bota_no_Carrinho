@@ -9,22 +9,28 @@ form.addEventListener('submit', function(event) {
 
     const elementos = target.getElementById('elementos');
 
-    const qnt_prod = elementos.item('qnt-prod');
-    const podutoId = elementos.item('id');
-    const produtoTodo = elementos.item("todo");
+    const qnt_prod = elementos.qnt-prod;
+    const produtoId = elementos.id;
+    const produtoTodo = elementos.todo;
 
-    if(produtoTodo && qnt_prod){
+    if(produtoTodo && qnt_prod && produtoId){
         const todo = buysave(qnt_prod.value, produtoTodo.innerText);
         Adicionar(todo.id, todo.text, todo.text2); 
+
+        // eu não sei se ue vou ou não usar as funções abaixo, pq eu n estou conseguindo testar
         //Adicionar_qnt(qnt);
         //buysave(qnt);
+    } else{
+
+        troca(produtoId.value, qnt_prod.value);
+
     }
     
     target.reset();
 
 })
 
-//evento que coleta todos os itens de volta
+//função que coleta todos os itens 
 function pegartodos(){
     let todos = [];
     const todosStr = localStorage.getItem('listinha-item');
@@ -36,11 +42,27 @@ function pegartodos(){
 
   }
 
-  function geradorid(){
-    return 1;
+  // função que pega o objeto pelo id
+  function pegarid(id){
+
+    const listinha = pegartodos();
+    const todo = listinha.find((item) => item.id == id);
+    if(todo){
+
+        return todo;
+
+    }
+
   }
 
-//evento que salva a parada toda
+  // o bloco de comentário abaixo é uma função aparentemente inutil, porém ainda tá no "aparentemente"
+  /*
+  function geradorid(){
+    return 1;
+  }*/
+
+
+//função que salva a parada toda
 function buysave(text,text2){
     const todo = {
 
@@ -64,11 +86,49 @@ function buysave(text,text2){
     
 }
 
+// função que deleta a parada toda
 function deletar(id){
 
     let listinha = pegartodos();
     listinha = listinha.filter(todo => todo.id != id);
     localStorage.setItem('listinha-item', JSON.stringify(listinha) );
+
+}
+
+// função que troca um objeto pelo novo
+function troca(id,text) {
+
+    const listinha = pegartodos();
+    const index = listinha.findIndex((todo) => todo.id == id);
+
+    if(index != -1) {
+
+        listinha[index] = {id,text};
+
+    }
+
+    localStorage.setItem('listinha-item', JSON.stringify(listinha) );
+
+}
+
+// função que chama a função deletar e carrega a página
+function açao_del(event) {
+
+    deletar(event.target.value);
+     Carrega();
+
+}
+
+//função que colocar um valor, que será decisivo para a troca de objetos
+function açao_troca(event){
+
+    const todo = pegarid(event.target.value);
+
+    const formmud = document.getElementById('mudar');
+    const qnt_mud = formmud.getElementById('mudança');
+
+    qnt_mud.qnt_car.value = todo.text;
+
 
 }
 
@@ -87,20 +147,27 @@ function Adicionar(id,text,text2){
         const li = document.createElement('li');
         li.classList.add('produto-car');
         
-        const button = document.createElement('button');
-        button.name = 'id';
-        button.innerText = ":(";
-        button.classList.add('deletado')
-        button.value = id;
-        button.addEventListener("click", function(target) {
+        const buttonDel = document.createElement('button');
+        buttonDel.name = 'id';
+        buttonDel.innerText = ":(";
+        buttonDel.classList.add('deletado')
+        buttonDel.value = id;
+        buttonDel.addEventListener("click", açao_del);
 
-            deletar(target.value), Carrega();
-
-        });
+        const buttonTroc = document.createElement('button');
+        buttonTroc.name = 'id';
+        buttonTroc.innerText = ":(";
+        buttonTroc.classList.add('deletado')
+        buttonTroc.value = id;
+        //buttonTroc.addEventListener("click", açao_del);
+         
          
          h4.append(text);
          li.append(text2);
-         li.appendChild(button);
+         li.appendChild(buttonDel);
+         li.appendChild(buttonTroc);
+
+
          lista_prod.appendChild(h4,li);
         
 
@@ -108,6 +175,8 @@ function Adicionar(id,text,text2){
 
 }
 
+
+// o bloco de comentário abaixo é uma função aparentemente inutil, porém ainda tá no "aparentemente"
 /*function Adicionar_qnt(text){
 
     const lista_prod = document.getElementsByClassName('itenscarrinho').item(0);
@@ -125,6 +194,7 @@ function Adicionar(id,text,text2){
 
 }*/
 
+//função que carrega a página
 function Carrega(){
 
     const lista_prod_vaz = document.getElementsByClassName('itenscarrinho').item(0);
@@ -138,5 +208,5 @@ function Carrega(){
  
 }
 
-//carregando a tela de novo 
+//chamando a função de carregara a página quando o usuário ligar a página 
 window.onload = Carrega();

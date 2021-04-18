@@ -33,9 +33,6 @@
   height: 40px;
 }
 
-#lista div ul {
-}
-
 /* List */
 
 /* Cart */
@@ -50,7 +47,3 @@
 #carrinho h2 {
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
 }
-
-#carrinho div ul {
-}
-/* Cart */
