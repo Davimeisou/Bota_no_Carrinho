@@ -1,8 +1,61 @@
 
+const produtos = [
+
+    {
+
+        quantidade = 0,
+        nome = " ",
+        id = 0
+
+    },
+
+    {
+
+        quantidade = 0,
+        nome = " ",
+        id = 0
+
+    },
+
+    {
+
+        quantidade = 0,
+        nome = " ",
+        id = 0
+
+    },
+
+    {
+
+        quantidade = 0,
+        nome = " ",
+        id = 0
+
+    }
+
+
+];
 
 const form = document.getElementById('todoForm');
+const clica = document.getelementById('adicionar');
 
-// não tô conseguindo pegar os itens e eu n sei o pq (provavelmente é um erro bobo)
+// !!!!!!aqui eu crio os itens, para cada item do array "produtos" eu crio um item no html (incompleto)
+const itensdaloja = produtos.forEach((produto) => {
+
+    const lista = document.getElementsByClassName('itenscarrinho').item(1);
+    const lista_qnt = document.getElementsByClassName('itenscarrinho').item(0);
+
+    if(lista && lista_qnt){
+
+
+
+    }
+
+});
+
+
+// !!!!!!não tô conseguindo pegar os itens e eu n sei o pq (provavelmente é um erro bobo)
+
 form.addEventListener('submit', function(event) {
     event.preventDefault();
     const { target } = event;
@@ -28,7 +81,7 @@ form.addEventListener('submit', function(event) {
     
     target.reset();
 
-})
+});
 
 //função que coleta todos os itens 
 function pegartodos(){
@@ -156,10 +209,10 @@ function Adicionar(id,text,text2){
 
         const buttonTroc = document.createElement('button');
         buttonTroc.name = 'id';
-        buttonTroc.innerText = ":(";
-        buttonTroc.classList.add('deletado')
+        buttonTroc.innerText = ":)";
+        buttonTroc.classList.add('trocado')
         buttonTroc.value = id;
-        //buttonTroc.addEventListener("click", açao_del);
+        buttonTroc.addEventListener("click", açao_troca);
          
          
          h4.append(text);
