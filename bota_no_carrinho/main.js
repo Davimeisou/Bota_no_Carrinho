@@ -4,7 +4,7 @@ const produtos = [
     {
 
         quantidade = 0,
-        nome = " ",
+        nome = " almofada de Pedro ",
         id = 0
 
     },
@@ -12,7 +12,7 @@ const produtos = [
     {
 
         quantidade = 0,
-        nome = " ",
+        nome = " Trufa ",
         id = 0
 
     },
@@ -20,7 +20,7 @@ const produtos = [
     {
 
         quantidade = 0,
-        nome = " ",
+        nome = " Pochete amarela do ben 10 paraquai ",
         id = 0
 
     },
@@ -28,7 +28,7 @@ const produtos = [
     {
 
         quantidade = 0,
-        nome = " ",
+        nome = " doidera ",
         id = 0
 
     }
@@ -37,26 +37,39 @@ const produtos = [
 ];
 
 const form = document.getElementById('todoForm');
-const clica = document.getelementById('adicionar');
 
-// !!!!!!aqui eu crio os itens, para cada item do array "produtos" eu crio um item no html (incompleto)
+// aqui eu crio os itens, para cada item do array "produtos" eu crio um item no html 
 const itensdaloja = produtos.forEach((produto) => {
 
-    const lista = document.getElementsByClassName('itenscarrinho').item(1);
-    const lista_qnt = document.getElementsByClassName('itenscarrinho').item(0);
+    const lista = document.getElementsByClassName('itenslista').item(0);
 
-    if(lista && lista_qnt){
+    if(lista){
 
+        const h4 = document.createElement('h4');
+        h4.classList.add('qnt-car');
+        h4.id = elementos;
+        h4.setAttribute("qnt-prod","qnt-prod");
 
+        const li = document.createElement('li');
+        li.classList.add('produto-car');
+        li.id = elementos;
+        h4.setAttribute("todo","todo");
+
+        h4.append(produto.quantidade);
+        li.append(produto.nome);
+
+        lista.appendChild(h4,li);
 
     }
 
-});
+    document.querySelector('coisas_box').appendChild(...itensdaloja);
 
+});
 
 // !!!!!!não tô conseguindo pegar os itens e eu n sei o pq (provavelmente é um erro bobo)
 
 form.addEventListener('submit', function(event) {
+
     event.preventDefault();
     const { target } = event;
 
@@ -67,12 +80,10 @@ form.addEventListener('submit', function(event) {
     const produtoTodo = elementos.todo;
 
     if(produtoTodo && qnt_prod && produtoId){
+
         const todo = buysave(qnt_prod.value, produtoTodo.innerText);
         Adicionar(todo.id, todo.text, todo.text2); 
 
-        // eu não sei se ue vou ou não usar as funções abaixo, pq eu n estou conseguindo testar
-        //Adicionar_qnt(qnt);
-        //buysave(qnt);
     } else{
 
         troca(produtoId.value, qnt_prod.value);
@@ -188,10 +199,9 @@ function açao_troca(event){
 //função que adiciona o item no carrinho
 function Adicionar(id,text,text2){
 
-    const lista_prod = document.getElementsByClassName('itenscarrinho').item(1);
-    const lista_prod_qnt = document.getElementsByClassName('itenscarrinho').item(0);
+    const lista_prod = document.getElementsByClassName('itenscarrinho').item(0);
 
-    if(lista_prod && lista_prod_qnt){
+    if(lista_prod){
 
         const h4 = document.createElement('h4');
         h4.classList.add('qnt-car');
@@ -250,6 +260,8 @@ function Adicionar(id,text,text2){
 //função que carrega a página
 function Carrega(){
 
+    
+
     const lista_prod_vaz = document.getElementsByClassName('itenscarrinho').item(0);
     lista_prod_vaz.innerHTML = ' ';
     pegartodos().forEach((todo) => {
@@ -258,6 +270,8 @@ function Carrega(){
          Adicionar(todo.id,todo.text,todo.text2);
          
      });
+
+
  
 }
 
