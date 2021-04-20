@@ -3,33 +3,33 @@ const produtos = [
 
     {
 
-        quantidade = 0,
-        nome = " almofada de Pedro ",
-        id = 0
+        quantidade: 0,
+        nome: " almofada de Pedro ",
+        id: 0
 
     },
 
     {
 
-        quantidade = 0,
-        nome = " Trufa ",
-        id = 0
+        quantidade: 0,
+        nome: " Trufa ",
+        id: 0
 
     },
 
     {
 
-        quantidade = 0,
-        nome = " Pochete amarela do ben 10 paraquai ",
-        id = 0
+        quantidade: 0,
+        nome: " Pochete amarela do ben 10 paraquai ",
+        id: 0
 
     },
 
     {
 
-        quantidade = 0,
-        nome = " doidera ",
-        id = 0
+        quantidade: 0,
+        nome: " doidera ",
+        id: 0
 
     }
 
@@ -47,24 +47,42 @@ const itensdaloja = produtos.forEach((produto) => {
 
         const h4 = document.createElement('h4');
         h4.classList.add('qnt-car');
-        h4.id = elementos;
-        h4.setAttribute("qnt-prod","qnt-prod");
+        h4.id = "elementos";
+        h4.name = "qnt-prod";
 
         const li = document.createElement('li');
         li.classList.add('produto-car');
-        li.id = elementos;
-        h4.setAttribute("todo","todo");
+        li.id = "elementos";
+        li.name = "todo";
+
+        const buttonPlus = document.createElement('button');
+        buttonPlus.innerText = "+";
+        buttonPlus.classList.add('adicionar');
+        buttonPlus.type = "submit";
+
+        const input = document.createElement('input');
+        input.classList.add('produtoid');
+        input.id = "elementos";
+        input.name = "id";
+        input.type = "hidden";
 
         h4.append(produto.quantidade);
         li.append(produto.nome);
+        li.appendChild(buttonPlus);
+        li.appendChild(input);
 
-        lista.appendChild(h4,li);
+        lista.appendChild(h4);
+        lista.appendChild(li);
 
     }
 
-    document.querySelector('coisas_box').appendChild(...itensdaloja);
+    
+
+    
 
 });
+
+
 
 // !!!!!!não tô conseguindo pegar os itens e eu n sei o pq (provavelmente é um erro bobo)
 
@@ -73,11 +91,11 @@ form.addEventListener('submit', function(event) {
     event.preventDefault();
     const { target } = event;
 
-    const elementos = target.getElementById('elementos');
+    //const elementos = document.getElementsById("elementos");
 
-    const qnt_prod = elementos.qnt-prod;
-    const produtoId = elementos.id;
-    const produtoTodo = elementos.todo;
+    const qnt_prod = target.getElementsByClassName('qnt-prod');
+    const produtoId = target.getElementsByClassName('produtoid');
+    const produtoTodo = target.getElementsByClassName('produto');
 
     if(produtoTodo && qnt_prod && produtoId){
 
@@ -130,7 +148,7 @@ function pegartodos(){
 function buysave(text,text2){
     const todo = {
 
-        id = 1,
+        id: 1,
         text, text2
 
     };
